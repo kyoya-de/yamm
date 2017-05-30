@@ -10,3 +10,4 @@ vendor/squizlabs/
 vendor/symfony/
 vendor/webmozart/
 .idea
+/build/

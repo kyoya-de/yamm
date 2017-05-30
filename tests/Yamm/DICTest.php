@@ -22,25 +22,6 @@ namespace Marm\Yamm;
 
 class DICTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSameObjectIsReturned()
-    {
-        $dic = new DIC();
-
-        $dic['object'] = function() {
-            return new \StdClass();
-        };
-
-        $this->assertSame($dic['object'], $dic['object']);
-    }
-
-    public function testSingleton()
-    {
-        $this->assertSame(
-            DIC::getInstance(),
-            DIC::getInstance()
-        );
-    }
-
     public function testGetEmptySetOfTaggedServices()
     {
         $dic = new DIC();

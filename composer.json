@@ -11,6 +11,11 @@
   "autoload": {
     "classmap": ["src/"]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Marm\\":["src/"]
+    }
+  },
   "extra": {
     "installer-name": "marm/yamm"
   },

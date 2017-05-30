@@ -18,17 +18,43 @@
  * Author URI: http://www.marmalade.de
  */
 
-if (!function_exists('oxNew') && file_exists(__DIR__ . '/../../../../../bootstrap.php')) {
-    require __DIR__ . '/../../../../../bootstrap.php';
+namespace Marm\Yamm;
+
+class DICBuilder
+{
+    /**
+     * @var DIC
+     */
+    private static $container;
+
+    /**
+     * @return bool
+     */
+    public static function hasContainer()
+    {
+        return (null !== self::$container);
+    }
+
+    /**
+     * @param $moduleDirectory
+     * @param $modules
+     */
+    public static function createContainer($moduleDirectory, $modules)
+    {
+        self::$container = $dic = new DIC();
+        foreach ($modules as $name => $path) {
+            $dicFileName = $moduleDirectory . '/' . $path . '/dic.php';
+            if (file_exists($dicFileName)) {
+                include $dicFileName;
+            }
+        }
+    }
+
+    /**
+     * @return DIC
+     */
+    public static function getContainer()
+    {
+        return self::$container ?: new DIC();
+    }
 }
-
-require __DIR__ . '/../../vendor/autoload.php';
-
-use Marm\Yamm\DICBuilder;
-
-if (!DICBuilder::hasContainer()) {
-    $moduleList = oxNew('oxModuleList');
-    DICBuilder::createContainer(\oxRegistry::getConfig()->getModulesDir(), $moduleList->getActiveModuleInfo());
-}
-
-return DICBuilder::getContainer();
